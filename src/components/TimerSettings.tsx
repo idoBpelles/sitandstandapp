@@ -9,11 +9,13 @@ interface TimerSettingsProps {
 
 const TimerSettings: React.FC<TimerSettingsProps> = ({ sittingTime, standingTime, onSave }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [sitting, setSitting] = useState(sittingTime);
-  const [standing, setStanding] = useState(standingTime);
+  const [sitting, setSitting] = useState(sittingTime.toString());
+  const [standing, setStanding] = useState(standingTime.toString());
 
   const handleSave = () => {
-    onSave(sitting, standing);
+    const sittingNum = sitting === '' ? 0 : Number(sitting);
+    const standingNum = standing === '' ? 0 : Number(standing);
+    onSave(sittingNum, standingNum);
     setIsOpen(false);
   };
 
@@ -32,18 +34,20 @@ const TimerSettings: React.FC<TimerSettingsProps> = ({ sittingTime, standingTime
             <div className="mb-4">
               <label className="block text-sm font-medium mb-1">Sitting Time (minutes)</label>
               <input
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 value={sitting}
-                onChange={(e) => setSitting(Number(e.target.value))}
+                onChange={(e) => setSitting(e.target.value.replace(/[^0-9]/g, ''))}
                 className="w-full p-2 bg-gray-700 rounded"
               />
             </div>
             <div className="mb-6">
               <label className="block text-sm font-medium mb-1">Standing Time (minutes)</label>
               <input
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 value={standing}
-                onChange={(e) => setStanding(Number(e.target.value))}
+                onChange={(e) => setStanding(e.target.value.replace(/[^0-9]/g, ''))}
                 className="w-full p-2 bg-gray-700 rounded"
               />
             </div>
