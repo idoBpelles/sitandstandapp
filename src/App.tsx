@@ -27,6 +27,8 @@ function App() {
       if (!isMuted) {
         new Audio('/notification.mp3').play().catch(error => console.error('Error playing audio:', error));
       }
+      // Add alert notification
+      alert(isStanding ? 'Time to sit!' : 'Time to stand!');
       updateStats();
     }
 
